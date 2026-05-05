@@ -72,7 +72,7 @@ show_banner() {
     echo -e "${MAGENTA}${BOLD}  ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  ${RESET}"
     echo ""
     print_line
-    echo -e "  ${CYAN}◈${RESET}  ${WHITE}${BOLD}AMAN DESKTOP INSTALLER${RESET}  ${DIM}│  by ${CYAN}neonheart711${RESET}"
+    echo -e "  ${CYAN}◈${RESET}  ${WHITE}${BOLD}neonheart711 DESKTOP INSTALLER${RESET}  ${DIM}│  by ${CYAN}neonheart711${RESET}"
     echo -e "  ${CYAN}◈${RESET}  ${DIM}Debian Proot + XFCE4 on Termux${RESET}"
     print_line
     echo ""
