@@ -1,141 +1,91 @@
-# Termux-Desktops-Installer
+# 🖥️ NEON DESKTOP INSTALLER
+### *by [neonheart711](https://github.com/neonheart711)*
 
-# 🔥 AMAN CYBER INSTALLER (FINAL)
+> **Debian Proot + XFCE4 Desktop on Termux — One Script Setup**
 
-A powerful **Termux automation installer** for Linux desktops and Kali
-NetHunter.\
-This project creates a cyber‑style multi‑distro environment with
-automatic setup, launcher creation, and animated hacker UI.
+---
 
-------------------------------------------------------------------------
+## ⚡ Quick Install
 
-## 🚀 Features
+Run this single command in Termux:
 
-### ⚡ Core Automation
-
--   One‑command installer for Termux
--   Automatic package installation
--   Storage permission setup
--   Safe error handling
--   Self‑update system (auto version check)
-
-### 🐧 Supported Linux Distributions
-
-This installer reads distros dynamically from **proot‑distro**,
-including:
-
--   adelie
--   almalinux
--   alpine
--   archlinux
--   artix
--   chimera
--   debian
--   deepin
--   fedora
--   manjaro
--   opensuse
--   oracle
--   pardus
--   rockylinux
--   trisquel
--   ubuntu
--   void
-
-✔️ Dynamic menu (auto detected from proot)
-
-------------------------------------------------------------------------
-
-### 💀 Kali NetHunter Mode
-
--   Installs official Kali NetHunter
--   Uses custom **NetHunter start script**
--   Creates global command:
-
-``` bash
-kali
+```bash
+wget -q https://raw.githubusercontent.com/neonheart711/Termux-Desktops-Installer/main/desktop_install.sh -O desktop_install.sh && chmod +x desktop_install.sh && bash desktop_install.sh
 ```
 
-This launcher is separate from desktop launchers.
+---
 
-------------------------------------------------------------------------
+## 📋 What It Does
 
-### 🖥️ Desktop Environments
+| Step | Action |
+|------|--------|
+| 🔧 | Sets up Termux environment & storage |
+| 📦 | Installs `x11-repo`, `tur-repo`, `pulseaudio`, `proot-distro`, `wget`, `git` |
+| 🐧 | Installs **Debian** via proot-distro |
+| 🖥️ | Installs **XFCE4** desktop inside Debian |
+| 🚀 | Creates `debian` launcher command |
 
-Choose your preferred desktop:
+---
 
--   GNOME
--   XFCE4
--   LXDE
--   Cinnamon
--   KDE Plasma
--   LXQt
+## 🚀 Usage
 
-✔️ Auto fallback if installation fails.
+After installation, launch your desktop with:
 
-------------------------------------------------------------------------
-
-### 🎬 Cyber UI Experience
-
--   Animated hacker installer banner
--   Neon desktop launcher
--   Auto login banner added to `.bashrc`
-
-Terminal startup banner:
-
-    🔥 AMAN CYBER TERMINAL 🔥
-    Script By: falconAman01
-    https://github.com/falconAman01
-
-------------------------------------------------------------------------
-
-## 🧠 How It Works
-
-1.  Installer updates Termux automatically.
-2.  Reads distro list from `proot-distro`.
-3.  Lets you choose distro + desktop.
-4.  Installs environment and creates launchers.
-
-------------------------------------------------------------------------
-
-## ▶️ Usage
-
-Run installer:
-
-``` bash
-bash desktop_install.sh
+```bash
+debian
 ```
 
-Start desktop:
+> ⚠️ Make sure **Termux:X11** app is open before running the launcher.
 
-``` bash
-desktop
+---
+
+## 📱 Requirements
+
+- **Termux** (latest from F-Droid — *not Play Store*)
+- **Termux:X11** app installed
+- Android **7.0+**
+- At least **3 GB** free storage
+- Stable internet connection
+
+---
+
+## 🗂️ Files Installed
+
+```
+$PREFIX/bin/debian          ← Desktop launcher command
+~/.hushlogin                ← Silences Termux login message
 ```
 
-Start Kali NetHunter:
+---
 
-``` bash
-kali
+## 🛠️ Troubleshooting
+
+**Storage permission denied?**
+```bash
+termux-setup-storage
 ```
 
-------------------------------------------------------------------------
+**Debian already installed?**
+```bash
+proot-distro remove debian
+proot-distro install debian
+```
 
-## ⚠️ Requirements
+**Black screen in X11?**
+- Open Termux:X11 first, then run `debian`
+- Make sure display is set correctly inside the script
 
--   Android device with Termux
--   Stable internet connection
--   Recommended free storage: **6GB -- 10GB**
--   ARM64 device recommended
+---
 
-------------------------------------------------------------------------
+## 📜 License
 
-## 👨‍💻 Author
+MIT — Free to use, modify, and share.
 
-**falconAman01**\
-GitHub: https://github.com/falconAman01
+---
 
-------------------------------------------------------------------------
+<div align="center">
 
-## 🧾 License
+Made with ❤️ by **neonheart711**  
+[GitHub](https://github.com/neonheart711) • [Termux Desktops Installer](https://github.com/neonheart711/Termux-Desktops-Installer)
 
-This project is provided for educational and customization purposes.
+</div>
