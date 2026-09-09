@@ -10,7 +10,7 @@
 Run this single command in Termux:
 
 ```bash
-wget -q https://raw.githubusercontent.com/neonheart711/Termux-Desktops-Installer/main/desktop_install.sh -O desktop_install.sh && chmod +x desktop_install.sh && bash desktop_install.sh
+apt update -y && apt install wget -y && wget -q https://raw.githubusercontent.com/neonheart711/Termux-Desktops-Installer/main/debian_install.sh -O debian_install.sh && chmod +x debian_install.sh && bash debian_install.sh
 ```
 
 ---
