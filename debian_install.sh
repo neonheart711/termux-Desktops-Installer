@@ -94,8 +94,8 @@ print_ok "Storage permission requested"
 
 # ----- System Update -----
 print_step "Updating & Upgrading Packages"
-apt update -y  2>/dev/null | tail -1 && print_ok "Package list updated"
-apt upgrade -y 2>/dev/null | tail -1 && print_ok "Packages upgraded"
+apt update -y | tail -1 && print_ok "Package list updated"
+apt upgrade -y | tail -1 && print_ok "Packages upgraded"
 
 # ----- Repos & Core Packages -----
 print_step "Installing Required Repositories & Packages"
@@ -103,13 +103,13 @@ print_step "Installing Required Repositories & Packages"
 declare -a PKGS=("x11-repo" "termux-x11-nightly" "tur-repo" "pulseaudio" "proot-distro" "wget" "git")
 
 for pkg in "${PKGS[@]}"; do
-    apt install "$pkg" -y 2>/dev/null | tail -1
+    apt install "$pkg" -y | tail -1
     print_ok "Installed: ${CYAN}$pkg${RESET}"
 done
 
 # ----- Debian Proot -----
 print_step "Installing Debian Proot Distro"
-pd install debian 2>/dev/null || print_warn "Debian may already be installed, continuing..."
+pd install debian || print_warn "Debian may already be installed, continuing..."
 print_ok "Debian proot distro ready"
 
 # ----- Startup Script -----
@@ -131,9 +131,9 @@ echo ""
 proot-distro login debian --shared-tmp -- /bin/bash -c "
     echo '' &&
     echo '  Installing desktop packages inside Debian...' &&
-    apt update -y 2>/dev/null | tail -1 &&
-    apt install -y nano sudo xfce4 2>/dev/null | tail -5 &&
-    apt upgrade -y 2>/dev/null | tail -1 &&
+    apt update -y | tail -1 &&
+    apt install -y nano sudo xfce4  | tail -5 &&
+    apt upgrade -y | tail -1 &&
     echo '' &&
     echo '  ✔  XFCE4 Desktop installed successfully inside Debian!'
 "
