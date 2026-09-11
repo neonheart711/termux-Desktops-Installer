@@ -56,7 +56,7 @@ The script will launch PulseAudio, activate Termux:X11, and boot directly into t
 
 ## 📱 Requirements
 
-- **Termux:** Latest build from [F-Droid](https://f-droid.org/en/packages/com.termux/) or GitHub Releases *(Do NOT use the Google Play Store build)*.
+- **Termux:** Latest build from [F-Droid](https://f-droid.org/en/packages/com.termux/) or [GitHub Releases](https://github.com/termux/termux-app/releases) *(Recommended Github release v0.118.3)* *(Do NOT use the Google Play Store build)*.
 - **Termux:X11:** Companion APK installed.
 - **Storage:** Minimum **3.5 GB – 4 GB** of free internal storage.
 - **Android Version:** Android 7.0 (Nougat) or higher.
