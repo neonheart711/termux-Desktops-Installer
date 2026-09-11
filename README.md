@@ -1,7 +1,7 @@
 # 🖥️ NEON DESKTOP INSTALLER
 ### *by [neonheart711](https://github.com/neonheart711)*
 
-> **Debian Proot + XFCE4 Desktop on Termux — One Script Setup**
+> **Debian Proot + XFCE4 Desktop on Termux — Clean, Transparent, One-Command Setup**
 
 ---
 
@@ -10,50 +10,65 @@
 Run this single command in Termux:
 
 ```bash
-apt update -y && apt install wget -y && wget -q https://raw.githubusercontent.com/neonheart711/Termux-Desktops-Installer/main/debian_install.sh -O debian_install.sh && chmod +x debian_install.sh && bash debian_install.sh
+pkg update -y && pkg install wget -y && wget -O debian_install.sh [https://raw.githubusercontent.com/neonheart711/Termux-Desktops-Installer/main/debian_install.sh](https://raw.githubusercontent.com/neonheart711/Termux-Desktops-Installer/main/debian_install.sh) && chmod +x debian_install.sh && bash debian_install.sh
 ```
+
+---
+
+## ✨ Features
+
+- **100% Real-Time Output:** No hidden downloads, suppressed errors, or truncated outputs (`tail` and `-q` flags removed).
+- **Step-by-Step Indicators:** Visual progress counters `[X/7]` for every core dependency.
+- **Non-Interactive Debian Build:** Runs without stopping or hanging on keyboard layout and timezone (`tzdata`) configuration prompts.
+- **PulseAudio & Termux:X11 Ready:** Configured to direct audio through localhost and video via native `X11` server displays.
+- **Smart Distro Detection:** Detects existing Debian rootfs installations to avoid redownloading unless required.
 
 ---
 
 ## 📋 What It Does
 
-| Step | Action |
-|------|--------|
-| 🔧 | Sets up Termux environment & storage |
-| 📦 | Installs `x11-repo`, `tur-repo`, `pulseaudio`, `proot-distro`, `wget`, `git` |
-| 🐧 | Installs **Debian** via proot-distro |
-| 🖥️ | Installs **XFCE4** desktop inside Debian |
-| 🚀 | Creates `debian` launcher command |
+| Step | Action | Description |
+|:---:|:---|:---|
+| 🔧 | **Termux Environment** | Creates `~/.hushlogin` and initialises Android storage permissions. |
+| 📦 | **Core Repos & Utilities** | Installs `x11-repo`, `tur-repo`, `termux-x11-nightly`, `pulseaudio`, `proot-distro`, `wget`, and `git`. |
+| 🐧 | **Debian Rootfs** | Deploys an official Debian environment inside Termux via `proot-distro`. |
+| 🖥️ | **XFCE4 Desktop** | Configures `nano`, `sudo`, `xfce4`, `xfce4-terminal`, and `dbus-x11` non-interactively inside Debian. |
+| 🚀 | **Global Launcher Setup** | Creates an executable launch script at `$PREFIX/bin/debian`. |
 
 ---
 
 ## 🚀 Usage
 
-After installation, launch your desktop with:
-
+1. Open the **Termux:X11** app on your Android device and keep it running in the background.
+2. Return to **Termux** and execute:
+ 
 ```bash
 debian
 ```
+### for access debian terminal 
+```bash
+debian --cli
+```
 
-> ⚠️ Make sure **Termux:X11** app is open before running the launcher.
+The script will launch PulseAudio, activate Termux:X11, and boot directly into the XFCE4 desktop.
 
 ---
 
 ## 📱 Requirements
 
-- **Termux** (latest from F-Droid — *not Play Store*)
-- **Termux:X11** app installed
-- Android **7.0+**
-- At least **3 GB** free storage
-- Stable internet connection
+- **Termux:** Latest build from [F-Droid](https://f-droid.org/en/packages/com.termux/) or GitHub Releases *(Do NOT use the Google Play Store build)*.
+- **Termux:X11:** Companion APK installed.
+- **Storage:** Minimum **3.5 GB – 4 GB** of free internal storage.
+- **Android Version:** Android 7.0 (Nougat) or higher.
+- **Internet:** Stable internet connection for downloading rootfs archives and packages.
 
 ---
 
-## 🗂️ Files Installed
+## 🗂️ Installed Files
 
 ```
-$PREFIX/bin/debian          ← Desktop launcher command
-~/.hushlogin                ← Silences Termux login message
+$PREFIX/bin/debian          ← Executable desktop launcher
+~/.hushlogin                ← Silences default Termux MOTD on startup
 ```
 
 ---
@@ -61,19 +76,22 @@ $PREFIX/bin/debian          ← Desktop launcher command
 ## 🛠️ Troubleshooting
 
 **Storage permission denied?**
+Run manual storage setup:
 ```bash
 termux-setup-storage
 ```
 
-**Debian already installed?**
+**Need a fresh installation?**
+Wipe the existing Debian rootfs and rerun the installer:
 ```bash
 proot-distro remove debian
-proot-distro install debian
+bash debian_install.sh
 ```
 
-**Black screen in X11?**
-- Open Termux:X11 first, then run `debian`
-- Make sure display is set correctly inside the script
+**Black screen in Termux:X11?**
+1. Force stop both **Termux** and **Termux:X11** from Android Settings.
+2. Open **Termux:X11** first and leave it on screen.
+3. Switch back to **Termux**, run `debian`, and immediately view **Termux:X11**.
 
 ---
 
@@ -88,7 +106,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -105,5 +123,7 @@ See the full [LICENSE](./LICENSE) file for details.
 
 Made with ❤️ by **neonheart711**  
 [GitHub](https://github.com/neonheart711) • [Termux Desktops Installer](https://github.com/neonheart711/Termux-Desktops-Installer)
+
+</div>
 
 </div>
