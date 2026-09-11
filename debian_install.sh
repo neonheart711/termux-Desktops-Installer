@@ -87,65 +87,83 @@ print_step "Setting Up Termux Environment"
 touch ~/.hushlogin
 print_ok "Created ~/.hushlogin (silent login)"
 
-termux-setup-storage 2>/dev/null || print_warn "Storage setup skipped (grant manually if prompted)"
-print_ok "Storage initialization verified"
+termux-setup-storage
+print_ok "Storage permission check completed"
 
 # ----- System Update -----
 print_step "Updating & Upgrading Termux Packages"
-pkg update -y && pkg upgrade -y
-print_ok "Termux packages updated"
+pkg update -y
+pkg upgrade -y
+print_ok "Termux base packages updated successfully"
 
 # ----- Repos & Core Packages -----
 print_step "Installing Required Repositories & Packages"
 
 declare -a PKGS=("x11-repo" "termux-x11-nightly" "tur-repo" "pulseaudio" "proot-distro" "wget" "git")
+total_pkgs=${#PKGS[@]}
+count=1
 
 for pkg in "${PKGS[@]}"; do
+    print_info "[$count/$total_pkgs] Installing ${CYAN}$pkg${RESET}..."
     if pkg install "$pkg" -y; then
-        print_ok "Installed: ${CYAN}$pkg${RESET}"
+        print_ok "Successfully installed: ${CYAN}$pkg${RESET}"
     else
-        print_warn "Failed to install: ${CYAN}$pkg${RESET} (check network or repo status)"
+        print_warn "Failed to install: ${CYAN}$pkg${RESET} (check network/mirrors)"
     fi
+    ((count++))
+    echo ""
 done
 
 # ----- Debian Proot -----
 print_step "Installing Debian Proot Distro"
 if proot-distro list | grep -q "debian.*installed"; then
-    print_warn "Debian is already installed, proceeding with configuration..."
+    print_warn "Debian is already installed, skipping download..."
 else
+    print_info "Downloading Debian rootfs (full process visible)..."
     proot-distro install debian || { print_err "Failed to install Debian proot"; exit 1; }
 fi
-print_ok "Debian proot distro ready"
+print_ok "Debian proot distro is ready"
 
 # ----- Startup Script -----
 print_step "Downloading Debian XFCE4 Launcher"
 LAUNCHER_URL="https://raw.githubusercontent.com/neonheart711/Termux-Desktops-Installer/main/scripts/debianStartXfce4"
 LAUNCHER_PATH="${PREFIX:-/data/data/com.termux/files/usr}/bin/debian"
 
-if wget -q --show-progress -O "$LAUNCHER_PATH" "$LAUNCHER_URL"; then
+if wget --show-progress -O "$LAUNCHER_PATH" "$LAUNCHER_URL"; then
     chmod +x "$LAUNCHER_PATH"
-    print_ok "Launcher installed at: ${CYAN}debian${RESET} (executable anywhere)"
+    print_ok "Launcher script installed at: ${CYAN}debian${RESET}"
 else
-    print_err "Failed to download launcher script from GitHub"
+    print_err "Failed to download launcher script"
 fi
 
 # ----- Desktop Inside Debian -----
 print_step "Setting Up XFCE4 Desktop Inside Debian"
-echo ""
-print_info "Configuring Debian packages non-interactively (this may take 5–10 minutes)..."
+print_info "Entering Debian environment to install packages..."
 echo ""
 
 proot-distro login debian --shared-tmp -- /bin/bash -c "
     export DEBIAN_FRONTEND=noninteractive
-    apt update -y &&
-    apt install -y --no-install-recommends nano sudo xfce4 xfce4-terminal dbus-x11 &&
+    
+    echo -e '\n\033[1;36m==>\033[0m Updating Debian repository lists...'
+    apt update -y
+    
+    echo -e '\n\033[1;36m==>\033[0m Installing Core Tools (nano, sudo)...'
+    apt install -y nano sudo
+    
+    echo -e '\n\033[1;36m==>\033[0m Installing XFCE4 Desktop & Terminal (Full logs enabled)...'
+    apt install -y xfce4 xfce4-terminal dbus-x11
+    
+    echo -e '\n\033[1;36m==>\033[0m Running package upgrade inside Debian...'
+    apt upgrade -y
+    
+    echo -e '\n\033[1;36m==>\033[0m Cleaning package cache...'
     apt clean
 "
 
 if [ $? -eq 0 ]; then
     print_ok "XFCE4 Desktop installed successfully inside Debian!"
 else
-    print_err "Error encountered during Debian XFCE4 installation"
+    print_err "An error occurred during Debian desktop package installation."
 fi
 
 # ----- Done -----
@@ -155,7 +173,7 @@ echo ""
 echo -e "${GREEN}${BOLD}  ✔  INSTALLATION COMPLETE!${RESET}"
 echo ""
 print_info "Start your desktop anytime by running:  ${CYAN}${BOLD}debian${RESET}"
-print_info "Make sure Termux:X11 app is running before launching."
+print_info "Make sure Termux:X11 app is opened before running the command."
 echo ""
 print_line
 echo -e "  ${DIM}Script by ${CYAN}neonheart711${RESET}  ${DIM}│  https://github.com/neonheart711${RESET}"
